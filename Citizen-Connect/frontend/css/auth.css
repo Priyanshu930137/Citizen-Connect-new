@@ -228,6 +228,20 @@
     margin-bottom: 24px;
 }
 
+#registerForm .role-selector {
+    grid-template-columns: 1fr;
+}
+
+.auth-note {
+    margin: -10px 0 20px;
+    padding: 12px 14px;
+    border: 1px solid #bfdbfe;
+    border-radius: var(--radius-sm);
+    background: #eff6ff;
+    color: #1e40af;
+    font-size: .9rem;
+}
+
 
 .role-option {
     position: relative;
@@ -366,6 +380,12 @@
     color: #166534;
 
     border: 1px solid #bbf7d0;
+}
+
+.auth-success-link {
+    margin: 14px 0 0;
+    display: flex;
+    width: fit-content;
 }
 
 

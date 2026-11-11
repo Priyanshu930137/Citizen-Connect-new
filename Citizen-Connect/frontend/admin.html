@@ -331,7 +331,7 @@
             <!-- INTELLIGENCE CARDS -->
 
             <div
-                class="grid grid-4"
+                class="grid grid-3"
                 style="margin-bottom: 30px;"
             >
 
@@ -394,7 +394,7 @@
 
                     <p style="color: var(--text-secondary);">
 
-                        ⚠️ High Priority Alerts
+                        ⚠️ Open High Priority
 
                     </p>
 
@@ -419,7 +419,7 @@
                         "
                     >
 
-                        Require immediate attention
+                        Active cases requiring attention
 
                     </p>
 
@@ -516,6 +516,17 @@
 
                 </div>
 
+                <div class="card" style="padding: 22px; background: white;">
+                    <p style="color: var(--text-secondary);">📥 Open and unassigned</p>
+                    <h3 id="unassignedOpenCount" style="margin-top: 12px; font-family: 'Poppins', sans-serif;">0</h3>
+                    <p style="margin-top: 8px; color: var(--text-secondary);">Need a department or technician owner</p>
+                </div>
+
+                <div class="card" style="padding: 22px; background: white;">
+                    <p style="color: var(--text-secondary);">⏳ Open over seven days</p>
+                    <h3 id="overdueOpenCount" style="margin-top: 12px; font-family: 'Poppins', sans-serif;">0</h3>
+                    <p style="margin-top: 8px; color: var(--text-secondary);">Aging cases for authority review</p>
+                </div>
 
             </div>
 
@@ -812,12 +823,16 @@
 
                 </button>
 
+                <button id="exportCsvButton" class="btn btn-primary">
+                    ⬇ Export current view
+                </button>
+
 
             </div>
 
 
 
-            <div class="grid grid-4">
+            <div class="grid grid-3">
 
 
                 <!-- SEARCH -->
@@ -867,6 +882,12 @@
                         <option value="Pending">
 
                             Pending
+
+                        </option>
+
+                        <option value="Assigned">
+
+                            Assigned
 
                         </option>
 
@@ -966,12 +987,23 @@
 
                 </div>
 
+                <div>
+                    <label for="departmentFilter">Department</label>
+                    <select id="departmentFilter" class="form-control">
+                        <option value="">All Departments</option>
+                    </select>
+                </div>
+
 
             </div>
 
 
 
             <div style="margin-top: 20px;">
+
+                <p id="grievanceResultCount" style="color: var(--text-secondary); margin-bottom: 12px;" aria-live="polite">
+                    Loading grievances...
+                </p>
 
                 <button
                     id="clearFiltersButton"

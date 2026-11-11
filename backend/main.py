@@ -4,6 +4,9 @@
 
 from pathlib import Path
 from collections import Counter
+from datetime import datetime, timedelta, timezone
+import uuid
+import logging
 
 from fastapi import (
     FastAPI,
@@ -16,6 +19,9 @@ from fastapi import (
 
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from starlette.requests import Request
+from sqlalchemy.exc import IntegrityError
 
 from sqlalchemy.orm import Session
 
@@ -29,6 +35,7 @@ from database import (
 
 import models
 import schemas
+from auth_utils import hash_password, verify_password
 
 from Ai import analyze_grievance
 import Ai
@@ -62,6 +69,20 @@ app = FastAPI(
     version="1.0.0"
 
 )
+logger = logging.getLogger("citizen_connect")
+
+
+@app.exception_handler(Exception)
+async def api_exception_handler(request: Request, exc: Exception):
+    # Keep API failures machine-readable so frontend clients never fail while
+    # parsing an HTML/plain-text 500 page as JSON. Details stay in the server log.
+    logger.exception("Unhandled error for %s %s", request.method, request.url.path)
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "An internal server error occurred. Check the backend log."},
+    )
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,
@@ -70,18 +91,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-UPLOAD_DIR = Path("uploads")
+BASE_DIR = Path(__file__).resolve().parent.parent
+UPLOAD_DIR = Path(__file__).resolve().parent / "uploads"
 UPLOAD_DIR.mkdir(exist_ok=True)
 
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+app.mount("/uploads", StaticFiles(directory=str(UPLOAD_DIR)), name="uploads")
 
 # ==========================================
 # FRONTEND PATH
 # ==========================================
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-FRONTEND_DIR = BASE_DIR / "frontend"
+FRONTEND_DIR = BASE_DIR / "Citizen-Connect" / "frontend"
 
 
 # ==========================================
@@ -153,6 +173,12 @@ def register_user(
     db: Session = Depends(get_db)
 
 ):
+
+    if user.role != "citizen":
+        raise HTTPException(
+            status_code=403,
+            detail="Staff accounts are provisioned by the administrator."
+        )
 
     # ======================================
     # CHECK EXISTING USER
@@ -240,7 +266,7 @@ def register_user(
 
         email=user.email,
 
-        password=user.password,
+        password=hash_password(user.password),
 
         role=user.role,
 
@@ -260,7 +286,14 @@ def register_user(
 
     db.add(new_user)
 
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(
+            status_code=409,
+            detail="This email address is already registered.",
+        )
 
     db.refresh(new_user)
 
@@ -328,7 +361,12 @@ def login_user(
     # PASSWORD CHECK
     # ======================================
 
-    if existing_user.password != user.password:
+    password_matches = (
+        verify_password(user.password, existing_user.password)
+        if existing_user.password.startswith("pbkdf2_sha256$")
+        else existing_user.password == user.password
+    )
+    if not password_matches:
 
         raise HTTPException(
 
@@ -355,6 +393,11 @@ def login_user(
             )
 
         )
+
+    # Upgrade accounts created before password hashing was introduced.
+    if not existing_user.password.startswith("pbkdf2_sha256$"):
+        existing_user.password = hash_password(user.password)
+        db.commit()
 
 
     return {
@@ -396,14 +439,6 @@ async def create_grievance(
     image: UploadFile = File(None),
     db: Session = Depends(get_db)
 ):
-    image_path = None
-
-    if image:
-        image_path = UPLOAD_DIR / image.filename
-        with open(image_path, "wb") as buffer:
-            buffer.write(await image.read())
-
-
     # ======================================
     # VALIDATE CITIZEN
     # ======================================
@@ -428,6 +463,10 @@ async def create_grievance(
             detail="Citizen account not found."
 
         )
+
+    # Store the account identity from the database instead of client supplied values.
+    citizen_name = citizen.name
+    citizen_email = citizen.email
     # ======================================
     # DUPLICATE CHECK
     # ======================================
@@ -442,6 +481,13 @@ async def create_grievance(
         status_code=409,
         detail="This complaint is already registered."
     )
+
+    image_path = None
+    if image and image.filename:
+        # Avoid trusting client supplied paths and filenames.
+        image_path = UPLOAD_DIR / f"{uuid.uuid4().hex}{Path(image.filename).suffix.lower()}"
+        with open(image_path, "wb") as buffer:
+            buffer.write(await image.read())
 
     # ======================================
     # AI ANALYSIS
@@ -480,7 +526,7 @@ async def create_grievance(
 
     description=description,
 
-    image_url=str(image_path) if image_path else None,
+        image_url=f"/uploads/{image_path.name}" if image_path else None,
 
     location=location,
 
@@ -1391,6 +1437,26 @@ def get_dashboard_stats(
 
     )
 
+    open_grievances = [
+        grievance for grievance in grievances
+        if grievance.status not in ("Resolved", "Rejected")
+    ]
+    open_high_priority = sum(
+        grievance.priority == "High" for grievance in open_grievances
+    )
+    unassigned_open = sum(
+        not grievance.assigned_technician_id for grievance in open_grievances
+    )
+    now = datetime.now(timezone.utc)
+    overdue_open = 0
+    for grievance in open_grievances:
+        created_at = grievance.created_at
+        if created_at:
+            if created_at.tzinfo is None:
+                created_at = created_at.replace(tzinfo=timezone.utc)
+            if now - created_at > timedelta(days=7):
+                overdue_open += 1
+
 
     return {
 
@@ -1406,7 +1472,10 @@ def get_dashboard_stats(
 
         "rejected": rejected,
 
-        "high_priority": high_priority
+        "high_priority": high_priority,
+        "open_high_priority": open_high_priority,
+        "unassigned_open": unassigned_open,
+        "overdue_open": overdue_open
 
     }
 

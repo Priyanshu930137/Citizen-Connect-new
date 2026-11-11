@@ -29,6 +29,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
+    async function readApiResponse(response) {
+        const body = await response.text();
+        if (!body.trim()) {
+            throw new Error(
+                `The API returned an empty response (HTTP ${response.status}). ` +
+                `Check that the backend is running at ${API_BASE}.`
+            );
+        }
+        try {
+            return JSON.parse(body);
+        } catch {
+            throw new Error(
+                `The API returned a non-JSON response (HTTP ${response.status}). ` +
+                `This usually means the frontend is pointed at its own static server. ` +
+                `API URL: ${API_BASE}`
+            );
+        }
+    }
+
 
     // ==========================================
     // PASSWORD VISIBILITY
@@ -170,6 +189,16 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
     });
+
+    // Staff accounts are created by the administrator; self-service signup
+    // must not allow a visitor to grant themselves elevated access.
+    if (document.getElementById("registerForm")) {
+        roleInputs.forEach(function (input) {
+            if (input.value !== "citizen") {
+                input.closest(".role-option").hidden = true;
+            }
+        });
+    }
 
 
     updateDepartmentVisibility();
@@ -336,7 +365,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     const data =
-                        await response.json();
+                        await readApiResponse(response);
 
 
                     // ==================================
@@ -360,12 +389,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     // ==================================
 
                     showMessage(
-
-                        "Account created successfully! Redirecting to login...",
-
+                        "Account created successfully. Your information is saved and your account is ready to use.",
                         "success"
-
                     );
+
+                    const successBox = document.getElementById("authMessage");
+                    const signInLink = document.createElement("a");
+                    signInLink.href = "login.html";
+                    signInLink.className = "btn btn-primary auth-success-link";
+                    signInLink.textContent = "Sign in now";
+                    successBox.appendChild(signInLink);
 
 
                     setTimeout(
@@ -375,7 +408,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 "login.html";
 
                         },
-                        1200
+                        4500
                     );
 
 
@@ -564,7 +597,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                     const data =
-                        await response.json();
+                        await readApiResponse(response);
 
 
                     // ==================================

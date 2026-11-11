@@ -145,6 +145,7 @@ document.addEventListener(
         let technicians = [];
 
         let selectedGrievanceId = null;
+        const departmentCharts = {};
 
 
         // ======================================
@@ -677,6 +678,105 @@ document.addEventListener(
                 "resolvedCount"
             ).textContent = resolved;
 
+            renderDepartmentAnalytics();
+
+        }
+
+
+        function renderDepartmentAnalytics() {
+            const terminalStatuses = ["Resolved", "Rejected"];
+            const openCases = grievances.filter(
+                grievance => !terminalStatuses.includes(grievance.status)
+            );
+            const statusLabels = ["Pending", "Assigned", "In Progress", "Resolved", "Rejected"];
+            const statusValues = statusLabels.map(
+                status => grievances.filter(grievance => grievance.status === status).length
+            );
+            const priorityLabels = ["High", "Medium", "Low"];
+            const priorityValues = priorityLabels.map(
+                priority => openCases.filter(grievance => grievance.priority === priority).length
+            );
+
+            const workload = {};
+            openCases.forEach(grievance => {
+                const name = grievance.assigned_technician_name;
+                if (name) workload[name] = (workload[name] || 0) + 1;
+            });
+            const topWorkload = Object.entries(workload)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 6);
+
+            if (window.Chart) {
+                drawDepartmentChart("departmentStatusChart", "status", {
+                    type: "doughnut", labels: statusLabels, values: statusValues,
+                    colors: ["#f59e0b", "#6366f1", "#2563eb", "#16a34a", "#64748b"]
+                });
+                drawDepartmentChart("departmentPriorityChart", "priority", {
+                    type: "bar", labels: priorityLabels, values: priorityValues,
+                    colors: ["#dc2626", "#f59e0b", "#16a34a"]
+                });
+                drawDepartmentChart("departmentTechnicianChart", "technician", {
+                    type: "bar",
+                    labels: topWorkload.length ? topWorkload.map(item => item[0]) : ["No active assignments"],
+                    values: topWorkload.length ? topWorkload.map(item => item[1]) : [0],
+                    colors: "#2563eb", horizontal: true
+                });
+            }
+
+            const container = document.getElementById("departmentInsights");
+            if (!container) return;
+            container.replaceChildren();
+
+            const highOpen = openCases.filter(item => item.priority === "High").length;
+            const unassigned = openCases.filter(item => !item.assigned_technician_id).length;
+            const overdue = openCases.filter(item => {
+                const created = new Date(item.created_at);
+                return !Number.isNaN(created.getTime()) && Date.now() - created.getTime() > 7 * 86400000;
+            }).length;
+            const resolved = grievances.filter(item => item.status === "Resolved").length;
+            const resolutionRate = grievances.length ? Math.round(resolved * 100 / grievances.length) : 0;
+            const insights = [
+                `${highOpen} high-priority open case${highOpen === 1 ? "" : "s"} need attention.`,
+                `${unassigned} open case${unassigned === 1 ? " is" : "s are"} waiting for technician assignment.`,
+                `${overdue} open case${overdue === 1 ? " is" : "s are"} older than seven days.`,
+                `Department resolution rate: ${resolutionRate}%.`,
+                topWorkload.length ? `Highest active workload: ${topWorkload[0][0]} (${topWorkload[0][1]} cases).` : "No active technician assignments yet."
+            ];
+            insights.forEach(message => {
+                const item = document.createElement("div");
+                item.className = "department-insight";
+                item.textContent = message;
+                container.appendChild(item);
+            });
+        }
+
+
+        function drawDepartmentChart(canvasId, key, config) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas || !window.Chart) return;
+            if (departmentCharts[key]) departmentCharts[key].destroy();
+            departmentCharts[key] = new Chart(canvas, {
+                type: config.type,
+                data: {
+                    labels: config.labels,
+                    datasets: [{
+                        data: config.values,
+                        backgroundColor: config.colors,
+                        borderWidth: config.type === "doughnut" ? 2 : 0,
+                        borderRadius: config.type === "bar" ? 8 : 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    indexAxis: config.horizontal ? "y" : "x",
+                    plugins: { legend: { display: config.type === "doughnut", position: "bottom" } },
+                    scales: config.type === "bar" ? {
+                        x: { beginAtZero: true, ticks: { precision: 0 } },
+                        y: { grid: { display: false } }
+                    } : {}
+                }
+            });
         }
 
 

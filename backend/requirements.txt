@@ -9,3 +9,4 @@ Pillow
 python-dotenv
 ImageHash
 psycopg2-binary
+PyMySQL

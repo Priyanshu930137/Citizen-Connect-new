@@ -1,12 +1,23 @@
-// Set this to your deployed Render backend URL before deploying the frontend.
-// Keep it empty when serving the frontend and API from the same origin locally.
-window.CITIZEN_CONNECT_API_URL = "https://citizen-grievance-ai-zr7z.onrender.com";
+// Override this only when the frontend and backend are hosted separately.
+window.CITIZEN_CONNECT_API_URL = window.CITIZEN_CONNECT_API_URL || "";
 
 window.CitizenConnect = {
     apiOrigin() {
-        const configuredUrl = window.CITIZEN_CONNECT_API_URL.trim();
+        const configuredUrl = (window.CITIZEN_CONNECT_API_URL || "").trim();
+        if (configuredUrl) return configuredUrl.replace(/\/$/, "");
 
-        return (configuredUrl || window.location.origin).replace(/\/$/, "");
+        const { protocol, hostname, port, origin } = window.location;
+        const localHost = ["localhost", "127.0.0.1", "::1"].includes(hostname);
+
+        // Live Server and similar frontend dev servers run on a different port
+        // from FastAPI. Point those pages at the backend instead of asking the
+        // static file server for /api (which responds with HTML/empty 404s).
+        if (localHost && port !== "8000") {
+            const apiHost = hostname.includes(":") ? `[${hostname}]` : hostname;
+            return `${protocol}//${apiHost}:8000`;
+        }
+
+        return origin.replace(/\/$/, "");
     },
 
     apiBase() {

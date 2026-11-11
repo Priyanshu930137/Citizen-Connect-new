@@ -10,17 +10,18 @@ import uuid
 
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+api_key = os.getenv("GEMINI_API_KEY")
+client = genai.Client(api_key=api_key) if api_key else None
 complaints_db = []
 
 
 def check_duplicate(text, img, location):
-    new_hash = str(imagehash.average_hash(img))
+    new_hash = str(imagehash.average_hash(img)) if img else None
 
     for item in complaints_db:
         score = SequenceMatcher(None, text.lower(), item["text"].lower()).ratio()
 
-        if (score > 0.85 or new_hash == item["image_hash"]) and item["location"].lower() == location.lower():
+        if (score > 0.85 or (new_hash and new_hash == item["image_hash"])) and item["location"].lower() == location.lower():
             return item
 
     return None
@@ -30,7 +31,7 @@ def analyze_grievance(subject, description, image_path, location):
     print("🔥 GEMINI AI RUNNING")
     print("image path ",image_path)
 
-    img = Image.open(image_path)
+    img = Image.open(image_path) if image_path else None
 
     duplicate = check_duplicate(description, img, location)
     if duplicate:
@@ -60,13 +61,32 @@ Return ONLY JSON:
 }}
 """
 
-    response = client.models.generate_content(
-        model="gemini-3.5-flash-lite",
-        contents=[prompt, img],
-        config={"response_mime_type": "application/json"}
-    )
-
-    result = json.loads(response.text)
+    if client:
+        contents = [prompt] + ([img] if img else [])
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=contents,
+            config={"response_mime_type": "application/json"}
+        )
+        result = json.loads(response.text)
+    else:
+        # Keep local development usable without a paid/external AI key.
+        text = f"{subject} {description}".lower()
+        routes = [
+            (("water", "leak", "pipe", "drain", "sewage"), "Water Supply Department", "Water"),
+            (("electric", "power", "wire", "streetlight", "light pole"), "Electricity Department", "Electricity"),
+            (("road", "pothole", "pavement", "sidewalk"), "Public Works Department", "Roads"),
+            (("traffic", "signal", "parking", "congestion"), "Traffic Management Department", "Traffic"),
+            (("police", "crime", "safety", "theft"), "Police Department", "Public safety"),
+            (("hospital", "health", "medical", "garbage", "waste"), "Health Department", "Public health"),
+        ]
+        department, category = "Municipal Corporation", "Municipal services"
+        for keywords, route_department, route_category in routes:
+            if any(word in text for word in keywords):
+                department, category = route_department, route_category
+                break
+        result = {"category": category, "department": department,
+                  "priority": "Medium", "summary": "Automatically categorized for local development."}
 
     urgent_words = ["accident","fire","electric shock","flood","emergency","collapse"]
     if any(word in description.lower() for word in urgent_words):
@@ -77,7 +97,7 @@ Return ONLY JSON:
     complaints_db.append({
         "complaint_id": complaint_id,
         "text": description,
-        "image_hash": str(imagehash.average_hash(img)),
+        "image_hash": str(imagehash.average_hash(img)) if img else None,
         "category": result["category"],
         "priority": result["priority"],
         "department": result["department"],
