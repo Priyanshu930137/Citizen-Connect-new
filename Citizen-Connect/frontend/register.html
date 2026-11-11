@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Register | Citizen Connect</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/auth.css"
+    >
+
+</head>
+
+
+<body>
+
+    <main class="auth-page">
+
+
+        <!-- BRAND SECTION -->
+
+        <section class="auth-brand">
+
+            <div class="brand-logo">
+
+                <div class="brand-logo-icon">
+                    🏛️
+                </div>
+
+                <span>
+                    Citizen Connect
+                </span>
+
+            </div>
+
+
+            <div class="brand-content">
+
+                <h1>
+                    Your Voice.
+                    Your City.
+                    Your Impact.
+                </h1>
+
+
+                <p>
+                    Join Citizen Connect and help create
+                    better, safer and more responsive
+                    communities.
+                </p>
+
+
+                <div class="brand-features">
+
+
+                    <div class="brand-feature">
+
+                        <div class="feature-icon">
+                            📝
+                        </div>
+
+                        <span>
+                            Submit public grievances easily
+                        </span>
+
+                    </div>
+
+
+                    <div class="brand-feature">
+
+                        <div class="feature-icon">
+                            🔍
+                        </div>
+
+                        <span>
+                            Track every grievance transparently
+                        </span>
+
+                    </div>
+
+
+                    <div class="brand-feature">
+
+                        <div class="feature-icon">
+                            🚀
+                        </div>
+
+                        <span>
+                            Help improve your community
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="brand-footer">
+
+                © 2026 Citizen Connect
+
+            </div>
+
+        </section>
+
+
+        <!-- REGISTER FORM -->
+
+        <section class="auth-form-section">
+
+            <div class="auth-form-container">
+
+
+                <div class="auth-header">
+
+                    <h2>
+                        Create your account
+                    </h2>
+
+                    <p>
+
+                        Already have an account?
+
+                        <a href="login.html">
+                            Login here
+                        </a>
+
+                    </p>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    id="authMessage"
+                    class="auth-message"
+                ></div>
+
+
+                <!-- FORM -->
+
+                <form
+                    id="registerForm"
+                    class="auth-form"
+                >
+
+
+                    <!-- ROLE SELECTOR -->
+
+                    <div class="role-selector">
+
+
+                        <!-- CITIZEN -->
+
+                        <div class="role-option">
+
+                            <input
+                                type="radio"
+                                id="citizen"
+                                name="role"
+                                value="citizen"
+                                checked
+                            >
+
+                            <label for="citizen">
+
+                                <span class="role-icon">
+                                    👤
+                                </span>
+
+                                <span class="role-name">
+                                    Citizen
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <!-- AUTHORITY -->
+
+                        <div class="role-option">
+
+                            <input
+                                type="radio"
+                                id="authority"
+                                name="role"
+                                value="authority"
+                            >
+
+                            <label for="authority">
+
+                                <span class="role-icon">
+                                    🏛️
+                                </span>
+
+                                <span class="role-name">
+                                    Authority
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <!-- MANAGEMENT -->
+
+                        <div class="role-option">
+
+                            <input
+                                type="radio"
+                                id="management"
+                                name="role"
+                                value="management"
+                            >
+
+                            <label for="management">
+
+                                <span class="role-icon">
+                                    📋
+                                </span>
+
+                                <span class="role-name">
+                                    Management
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <!-- TECHNICIAN -->
+
+                        <div class="role-option">
+
+                            <input
+                                type="radio"
+                                id="technician"
+                                name="role"
+                                value="technician"
+                            >
+
+                            <label for="technician">
+
+                                <span class="role-icon">
+                                    🔧
+                                </span>
+
+                                <span class="role-name">
+                                    Technician
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div
+                        class="form-group"
+                        id="departmentGroup"
+                        style="display: none;"
+                    >
+
+                        <label for="department">
+                            Department
+                        </label>
+
+
+                        <select
+                            id="department"
+                            class="form-control"
+                        >
+
+                            <option value="">
+                                Select your department
+                            </option>
+
+                            <option value="Public Works Department">
+                                Public Works Department
+                            </option>
+
+                            <option value="Water Supply Department">
+                                Water Supply Department
+                            </option>
+
+                            <option value="Electricity Department">
+                                Electricity Department
+                            </option>
+
+                            <option value="Municipal Corporation">
+                                Municipal Corporation
+                            </option>
+
+                            <option value="Police Department">
+                                Police Department
+                            </option>
+
+                            <option value="Health Department">
+                                Health Department
+                            </option>
+
+                            <option value="Traffic Management Department">
+                                Traffic Management Department
+                            </option>
+
+                            <option value="Public Administration">
+                                Public Administration
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            class="form-control"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            class="form-control"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                class="form-control"
+                                placeholder="Create a password"
+                                minlength="6"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="password"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SUBMIT -->
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary auth-submit"
+                    >
+
+                        Create Account
+
+                    </button>
+
+
+                </form>
+
+
+                <div class="auth-divider">
+
+                    Citizen Connect
+
+                </div>
+
+
+                <a
+                    href="index.html"
+                    class="btn btn-outline"
+                    style="width: 100%;"
+                >
+
+                    ← Back to Home
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+
+</body>
+
+</html>

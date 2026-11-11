@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Grievance Details | Citizen Connect
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     NAVBAR
+========================================== -->
+
+<nav class="navbar">
+
+    <a
+        href="technician.html"
+        class="logo"
+    >
+
+        <div class="logo-icon">
+            🔧
+        </div>
+
+        <span>
+            Citizen Connect
+        </span>
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="technician.html">
+
+            Dashboard
+
+        </a>
+
+        <a
+            href="technician-details.html"
+            class="active"
+        >
+
+            Grievance Details
+
+        </a>
+
+    </div>
+
+
+    <div class="nav-actions">
+
+        <span
+            id="userName"
+            style="
+                font-weight: 600;
+                color: var(--text-secondary);
+            "
+        >
+
+            Loading...
+
+        </span>
+
+
+        <button
+            id="logoutButton"
+            class="btn btn-outline"
+        >
+
+            Logout
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ==========================================
+     HERO
+========================================== -->
+
+<section
+    style="
+        padding: 45px 0;
+        background: linear-gradient(
+            135deg,
+            #eff6ff,
+            #f8fafc
+        );
+    "
+>
+
+    <div class="container">
+
+
+        <a
+            href="technician.html"
+            class="btn btn-outline"
+        >
+
+            ← Back to Dashboard
+
+        </a>
+
+
+        <h1
+            style="
+                margin-top: 25px;
+                font-family: 'Poppins', sans-serif;
+            "
+        >
+
+            🔧 Grievance Details
+
+        </h1>
+
+
+        <p
+            style="
+                color: var(--text-secondary);
+                margin-top: 10px;
+            "
+        >
+
+            Review the assigned grievance and update
+            its progress and resolution details.
+
+        </p>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     MAIN CONTENT
+========================================== -->
+
+<section style="padding: 50px 0;">
+
+    <div class="container">
+
+
+        <!-- MESSAGE -->
+
+        <div
+            id="messageBox"
+            style="
+                display: none;
+                padding: 15px;
+                border-radius: 10px;
+                margin-bottom: 25px;
+            "
+        ></div>
+
+
+
+        <!-- LOADING -->
+
+        <div
+            id="loadingContainer"
+            class="card"
+            style="
+                padding: 40px;
+                text-align: center;
+            "
+        >
+
+            ⏳ Loading grievance details...
+
+        </div>
+
+
+
+        <!-- CONTENT -->
+
+        <div
+            id="detailsContainer"
+            style="display: none;"
+        >
+
+
+            <!-- ==================================
+                 GRIEVANCE INFORMATION
+            =================================== -->
+
+            <div
+                class="card"
+                style="
+                    padding: 30px;
+                    margin-bottom: 30px;
+                "
+            >
+
+                <div
+                    style="
+                        display: flex;
+                        justify-content: space-between;
+                        gap: 20px;
+                        flex-wrap: wrap;
+                    "
+                >
+
+
+                    <div>
+
+                        <span
+                            id="grievanceId"
+                            class="badge badge-progress"
+                        >
+
+                            Grievance
+
+                        </span>
+
+
+                        <h2
+                            id="subject"
+                            style="
+                                margin-top: 18px;
+                                font-family: 'Poppins', sans-serif;
+                            "
+                        >
+
+                            Loading...
+
+                        </h2>
+
+                    </div>
+
+
+                    <div>
+
+                        <div id="priorityBadge">
+
+                        </div>
+
+                        <div
+                            id="statusBadge"
+                            style="margin-top: 10px;"
+                        >
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <hr
+                    style="
+                        margin: 25px 0;
+                        border: none;
+                        border-top: 1px solid #e2e8f0;
+                    "
+                >
+
+
+
+                <div class="grid grid-2">
+
+
+                    <div>
+
+                        <p
+                            style="
+                                color: var(--text-secondary);
+                            "
+                        >
+
+                            📍 Location
+
+                        </p>
+
+
+                        <h4
+                            id="location"
+                            style="margin-top: 7px;"
+                        >
+
+                            -
+
+                        </h4>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <p
+                            style="
+                                color: var(--text-secondary);
+                            "
+                        >
+
+                            📂 Category
+
+                        </p>
+
+
+                        <h4
+                            id="category"
+                            style="margin-top: 7px;"
+                        >
+
+                            -
+
+                        </h4>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <p
+                            style="
+                                color: var(--text-secondary);
+                            "
+                        >
+
+                            🏢 Department
+
+                        </p>
+
+
+                        <h4
+                            id="department"
+                            style="margin-top: 7px;"
+                        >
+
+                            -
+
+                        </h4>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <p
+                            style="
+                                color: var(--text-secondary);
+                            "
+                        >
+
+                            👤 Citizen
+
+                        </p>
+
+
+                        <h4
+                            id="citizenName"
+                            style="margin-top: 7px;"
+                        >
+
+                            -
+
+                        </h4>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <hr
+                    style="
+                        margin: 25px 0;
+                        border: none;
+                        border-top: 1px solid #e2e8f0;
+                    "
+                >
+
+
+
+                <h3
+                    style="
+                        font-family: 'Poppins', sans-serif;
+                        margin-bottom: 12px;
+                    "
+                >
+
+                    📝 Description
+
+                </h3>
+
+
+                <p
+                    id="description"
+                    style="
+                        line-height: 1.7;
+                        color: var(--text-secondary);
+                        white-space: pre-line;
+                    "
+                >
+
+                    -
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- ==================================
+                 UPDATE GRIEVANCE
+            =================================== -->
+
+            <div
+                class="card"
+                style="padding: 30px;"
+            >
+
+
+                <span class="badge badge-progress">
+
+                    🔧 TECHNICIAN UPDATE
+
+                </span>
+
+
+                <h2
+                    style="
+                        font-family: 'Poppins', sans-serif;
+                        margin-top: 15px;
+                    "
+                >
+
+                    Update Grievance Progress
+
+                </h2>
+
+
+                <p
+                    style="
+                        color: var(--text-secondary);
+                        margin-top: 8px;
+                        margin-bottom: 25px;
+                    "
+                >
+
+                    Update the work progress, diagnosis,
+                    and final resolution.
+
+                </p>
+
+
+
+                <!-- STATUS -->
+
+                <div
+                    style="margin-bottom: 20px;"
+                >
+
+                    <label for="updateStatus">
+
+                        Status
+
+                    </label>
+
+
+                    <select
+                        id="updateStatus"
+                        class="form-control"
+                    >
+
+                        <option value="In Progress">
+
+                            In Progress
+
+                        </option>
+
+                        <option value="Resolved">
+
+                            Resolved
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- DIAGNOSIS -->
+
+                <div
+                    style="margin-bottom: 20px;"
+                >
+
+                    <label for="diagnosisInput">
+
+                        🔍 Diagnosis / Work Details
+
+                    </label>
+
+
+                    <textarea
+                        id="diagnosisInput"
+                        class="form-control"
+                        rows="5"
+                        placeholder="Describe the issue, inspection findings, or work performed..."
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- RESOLUTION -->
+
+                <div
+                    style="margin-bottom: 25px;"
+                >
+
+                    <label for="resolutionInput">
+
+                        ✅ Resolution Note
+
+                    </label>
+
+
+                    <textarea
+                        id="resolutionInput"
+                        class="form-control"
+                        rows="5"
+                        placeholder="Describe how the grievance was resolved..."
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+
+                <button
+                    id="saveUpdateButton"
+                    class="btn btn-primary"
+                >
+
+                    💾 Save Update
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- ==================================
+                 EXISTING UPDATE DETAILS
+            =================================== -->
+
+            <div
+                id="existingUpdateCard"
+                class="card"
+                style="
+                    padding: 30px;
+                    margin-top: 30px;
+                    display: none;
+                "
+            >
+
+
+                <h2
+                    style="
+                        font-family: 'Poppins', sans-serif;
+                        margin-bottom: 25px;
+                    "
+                >
+
+                    📋 Existing Work Updates
+
+                </h2>
+
+
+
+                <div
+                    id="existingDiagnosisContainer"
+                    style="
+                        margin-bottom: 25px;
+                    "
+                >
+
+                    <h4>
+                        🔍 Diagnosis
+                    </h4>
+
+                    <p
+                        id="existingDiagnosis"
+                        style="
+                            margin-top: 8px;
+                            color: var(--text-secondary);
+                            white-space: pre-line;
+                        "
+                    ></p>
+
+                </div>
+
+
+
+                <div
+                    id="existingResolutionContainer"
+                >
+
+                    <h4>
+                        ✅ Resolution
+                    </h4>
+
+                    <p
+                        id="existingResolution"
+                        style="
+                            margin-top: 8px;
+                            color: var(--text-secondary);
+                            white-space: pre-line;
+                        "
+                    ></p>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
+<footer class="footer">
+
+    <div class="footer-bottom">
+
+        © 2026 Citizen Connect —
+        Technician Portal
+
+    </div>
+
+</footer>
+
+
+
+<!-- JAVASCRIPT -->
+
+<script src="js/config.js"></script>
+<script src="js/technician-details.js"></script>
+
+
+</body>
+
+</html>

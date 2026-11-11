@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Grievance Details | Citizen Connect</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ================================
+         NAVBAR
+    ================================= -->
+
+    <nav class="navbar">
+
+        <a href="admin.html" class="logo">
+
+            <div class="logo-icon">🏛️</div>
+
+            <span>Citizen Connect</span>
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="admin.html">
+                Dashboard
+            </a>
+
+            <a href="#" class="active">
+                Grievance Details
+            </a>
+
+        </div>
+
+
+        <div class="nav-actions">
+
+            <span
+                id="userName"
+                style="
+                    font-weight: 600;
+                    color: var(--text-secondary);
+                "
+            >
+                Loading...
+            </span>
+
+
+            <button
+                id="logoutButton"
+                class="btn btn-outline"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================================
+         HEADER
+    ================================= -->
+
+    <section
+        style="
+            padding: 55px 0;
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #f8fafc,
+                    #e0f2fe
+                );
+        "
+    >
+
+        <div class="container">
+
+
+            <a
+                href="admin.html"
+                class="btn btn-outline"
+                style="margin-bottom: 28px;"
+            >
+                ← Back to Dashboard
+            </a>
+
+
+            <div
+                style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-end;
+                    gap: 25px;
+                    flex-wrap: wrap;
+                "
+            >
+
+                <div>
+
+                    <span class="badge badge-progress">
+                        📋 GRIEVANCE MANAGEMENT
+                    </span>
+
+
+                    <h1
+                        style="
+                            font-family: 'Poppins', sans-serif;
+                            margin-top: 18px;
+                            font-size:
+                                clamp(2rem, 5vw, 3.2rem);
+                        "
+                    >
+                        Grievance Details
+                    </h1>
+
+
+                    <p
+                        style="
+                            color: var(--text-secondary);
+                            margin-top: 10px;
+                        "
+                    >
+                        Review the complaint, AI assessment,
+                        and current progress.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="statusBadge"
+                    class="badge badge-progress"
+                    style="
+                        padding: 12px 20px;
+                        font-size: 0.95rem;
+                    "
+                >
+                    Loading...
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================
+         MAIN CONTENT
+    ================================= -->
+
+    <section style="padding: 50px 0;">
+
+        <div class="container">
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="detailsMessage"
+                style="
+                    display: none;
+                    padding: 15px 18px;
+                    border-radius: 12px;
+                    margin-bottom: 25px;
+                "
+            ></div>
+
+
+
+            <!-- LOADING -->
+
+            <div
+                id="loadingDetails"
+                class="card"
+                style="
+                    padding: 50px;
+                    text-align: center;
+                    color: var(--text-secondary);
+                "
+            >
+
+                <div style="font-size: 2rem; margin-bottom: 12px;">
+                    ⏳
+                </div>
+
+                Loading grievance details...
+
+            </div>
+
+
+
+            <!-- DETAILS CONTENT -->
+
+            <div
+                id="detailsContent"
+                style="display: none;"
+            >
+
+
+                <!-- ================================
+                     GRIEVANCE OVERVIEW
+                ================================= -->
+
+                <div
+                    class="card"
+                    style="
+                        padding: 35px;
+                        margin-bottom: 25px;
+                    "
+                >
+
+
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: flex-start;
+                            gap: 20px;
+                            flex-wrap: wrap;
+                            margin-bottom: 28px;
+                        "
+                    >
+
+
+                        <div>
+
+                            <p
+                                style="
+                                    color: var(--text-secondary);
+                                    font-size: 0.8rem;
+                                    font-weight: 700;
+                                    letter-spacing: 1px;
+                                "
+                            >
+                                GRIEVANCE REFERENCE
+                            </p>
+
+
+                            <h2
+                                id="grievanceId"
+                                style="
+                                    margin-top: 7px;
+                                    font-family: 'Poppins', sans-serif;
+                                "
+                            >
+                                #
+                            </h2>
+
+                        </div>
+
+
+                        <div
+                            id="priorityBadge"
+                            style="
+                                padding: 10px 16px;
+                                border-radius: 999px;
+                                font-weight: 600;
+                                background: #f1f5f9;
+                            "
+                        >
+                            Priority: -
+                        </div>
+
+
+                    </div>
+
+
+                    <div
+                        style="
+                            border-top: 1px solid #e2e8f0;
+                            padding-top: 25px;
+                        "
+                    >
+
+
+                        <h2
+                            id="grievanceSubject"
+                            style="
+                                font-family: 'Poppins', sans-serif;
+                                margin-bottom: 15px;
+                                font-size: 1.7rem;
+                            "
+                        >
+                            Subject
+                        </h2>
+
+
+                        <p
+                            id="grievanceDescription"
+                            style="
+                                color: var(--text-secondary);
+                                line-height: 1.8;
+                                white-space: pre-line;
+                            "
+                        >
+                            Description
+                        </p>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ================================
+                     INFORMATION GRID
+                ================================= -->
+
+                <div
+                    class="grid grid-2"
+                    style="margin-bottom: 25px;"
+                >
+
+
+                    <!-- CITIZEN INFORMATION -->
+
+                    <div
+                        class="card"
+                        style="padding: 30px;"
+                    >
+
+                        <div
+                            style="
+                                display: flex;
+                                align-items: center;
+                                gap: 12px;
+                                margin-bottom: 25px;
+                            "
+                        >
+
+                            <div
+                                style="
+                                    font-size: 1.8rem;
+                                "
+                            >
+                                👤
+                            </div>
+
+
+                            <div>
+
+                                <h2
+                                    style="
+                                        font-family:
+                                            'Poppins', sans-serif;
+                                    "
+                                >
+                                    Citizen Information
+                                </h2>
+
+
+                                <p
+                                    style="
+                                        color:
+                                            var(--text-secondary);
+                                        margin-top: 4px;
+                                        font-size: 0.9rem;
+                                    "
+                                >
+                                    Contact details of the citizen
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                display: grid;
+                                gap: 20px;
+                            "
+                        >
+
+
+                            <div>
+
+                                <p style="color: var(--text-secondary);">
+                                    Full Name
+                                </p>
+
+                                <h3
+                                    id="citizenName"
+                                    style="margin-top: 5px;"
+                                >
+                                    -
+                                </h3>
+
+                            </div>
+
+
+                            <div>
+
+                                <p style="color: var(--text-secondary);">
+                                    Email Address
+                                </p>
+
+                                <h3
+                                    id="citizenEmail"
+                                    style="
+                                        margin-top: 5px;
+                                        word-break: break-word;
+                                    "
+                                >
+                                    -
+                                </h3>
+
+                            </div>
+
+
+                            <div>
+
+                                <p style="color: var(--text-secondary);">
+                                    Phone Number
+                                </p>
+
+                                <h3
+                                    id="citizenPhone"
+                                    style="margin-top: 5px;"
+                                >
+                                    -
+                                </h3>
+
+                            </div>
+
+
+                            <div>
+
+                                <p style="color: var(--text-secondary);">
+                                    📍 Location
+                                </p>
+
+                                <h3
+                                    id="grievanceLocation"
+                                    style="margin-top: 5px;"
+                                >
+                                    -
+                                </h3>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- AI SUMMARY CARD -->
+
+                    <div
+                        class="card"
+                        style="
+                            padding: 30px;
+                            background:
+                                linear-gradient(
+                                    135deg,
+                                    #eff6ff,
+                                    #f8fafc
+                                );
+                            border: 1px solid #bfdbfe;
+                        "
+                    >
+
+
+                        <div
+                            style="
+                                display: flex;
+                                align-items: center;
+                                gap: 12px;
+                                margin-bottom: 25px;
+                            "
+                        >
+
+                            <div style="font-size: 1.8rem;">
+                                🤖
+                            </div>
+
+
+                            <div>
+
+                                <span class="badge badge-progress">
+                                    AI INTELLIGENCE
+                                </span>
+
+
+                                <h2
+                                    style="
+                                        font-family:
+                                            'Poppins', sans-serif;
+                                        margin-top: 10px;
+                                    "
+                                >
+                                    AI Grievance Analysis
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <p
+                            style="
+                                color: var(--text-secondary);
+                                line-height: 1.7;
+                            "
+                        >
+                            The system automatically analyzes the
+                            grievance to identify its category,
+                            responsible department, and urgency level.
+                        </p>
+
+
+                        <div
+                            style="
+                                margin-top: 25px;
+                                padding: 20px;
+                                background: white;
+                                border-radius: 14px;
+                                border: 1px solid #dbeafe;
+                            "
+                        >
+
+                            <p
+                                style="
+                                    color: var(--text-secondary);
+                                    font-size: 0.85rem;
+                                    font-weight: 600;
+                                    margin-bottom: 8px;
+                                "
+                            >
+                                🧠 AI ASSESSMENT
+                            </p>
+
+
+                            <p
+                                id="aiAssessment"
+                                style="
+                                    line-height: 1.8;
+                                "
+                            >
+                                -
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ================================
+                     AI INTELLIGENCE PANEL
+                ================================= -->
+
+                <div
+                    class="card"
+                    style="
+                        padding: 32px;
+                        margin-bottom: 25px;
+                        border: 1px solid #c7d2fe;
+                    "
+                >
+
+
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: flex-start;
+                            gap: 20px;
+                            flex-wrap: wrap;
+                            margin-bottom: 28px;
+                        "
+                    >
+
+
+                        <div>
+
+                            <span class="badge badge-progress">
+                                ✨ AI-POWERED ANALYSIS
+                            </span>
+
+
+                            <h2
+                                style="
+                                    font-family:
+                                        'Poppins', sans-serif;
+                                    margin-top: 12px;
+                                "
+                            >
+                                Grievance Intelligence
+                            </h2>
+
+
+                            <p
+                                style="
+                                    color:
+                                        var(--text-secondary);
+                                    margin-top: 7px;
+                                "
+                            >
+                                Automated classification and routing
+                                recommendations generated by the system.
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                font-size: 2.2rem;
+                            "
+                        >
+                            🧠
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="grid grid-3">
+
+
+                        <!-- CATEGORY -->
+
+                        <div
+                            style="
+                                padding: 22px;
+                                border-radius: 14px;
+                                background: #f8fafc;
+                                border: 1px solid #e2e8f0;
+                            "
+                        >
+
+                            <div style="font-size: 1.5rem;">
+                                🏷️
+                            </div>
+
+
+                            <p
+                                style="
+                                    color: var(--text-secondary);
+                                    margin-top: 12px;
+                                    font-size: 0.85rem;
+                                "
+                            >
+                                DETECTED CATEGORY
+                            </p>
+
+
+                            <h3
+                                id="grievanceCategory"
+                                style="margin-top: 8px;"
+                            >
+                                -
+                            </h3>
+
+                        </div>
+
+
+
+                        <!-- DEPARTMENT -->
+
+                        <div
+                            style="
+                                padding: 22px;
+                                border-radius: 14px;
+                                background: #f8fafc;
+                                border: 1px solid #e2e8f0;
+                            "
+                        >
+
+                            <div style="font-size: 1.5rem;">
+                                🏢
+                            </div>
+
+
+                            <p
+                                style="
+                                    color: var(--text-secondary);
+                                    margin-top: 12px;
+                                    font-size: 0.85rem;
+                                "
+                            >
+                                RECOMMENDED DEPARTMENT
+                            </p>
+
+
+                            <h3
+                                id="grievanceDepartment"
+                                style="margin-top: 8px;"
+                            >
+                                -
+                            </h3>
+
+                        </div>
+
+
+
+                        <!-- PRIORITY -->
+
+                        <div
+                            style="
+                                padding: 22px;
+                                border-radius: 14px;
+                                background: #f8fafc;
+                                border: 1px solid #e2e8f0;
+                            "
+                        >
+
+                            <div style="font-size: 1.5rem;">
+                                ⚡
+                            </div>
+
+
+                            <p
+                                style="
+                                    color: var(--text-secondary);
+                                    margin-top: 12px;
+                                    font-size: 0.85rem;
+                                "
+                            >
+                                AI PRIORITY LEVEL
+                            </p>
+
+
+                            <h3
+                                id="grievancePriority"
+                                style="margin-top: 8px;"
+                            >
+                                -
+                            </h3>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ================================
+                     STATUS MANAGEMENT
+                ================================= -->
+
+                <div
+                    class="card"
+                    style="
+                        padding: 32px;
+                        margin-bottom: 25px;
+                    "
+                >
+
+
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: flex-start;
+                            gap: 20px;
+                            flex-wrap: wrap;
+                            margin-bottom: 25px;
+                        "
+                    >
+
+
+                        <div>
+
+                            <h2
+                                style="
+                                    font-family:
+                                        'Poppins', sans-serif;
+                                "
+                            >
+                                🔄 Status Management
+                            </h2>
+
+
+                            <p
+                                style="
+                                    color:
+                                        var(--text-secondary);
+                                    margin-top: 7px;
+                                "
+                            >
+                                Update the progress of this grievance.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <form id="statusForm">
+
+
+                        <div
+                            class="form-group"
+                            style="max-width: 500px;"
+                        >
+
+                            <label for="statusSelect">
+                                Select New Status
+                            </label>
+
+
+                            <select
+                                id="statusSelect"
+                                class="form-control"
+                            >
+
+                                <option value="Pending">
+                                    🟡 Pending
+                                </option>
+
+                                <option value="In Progress">
+                                    🔵 In Progress
+                                </option>
+
+                                <option value="Resolved">
+                                    🟢 Resolved
+                                </option>
+
+                                <option value="Rejected">
+                                    🔴 Rejected
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            id="updateStatusButton"
+                            class="btn btn-primary"
+                        >
+                            💾 Update Status
+                        </button>
+
+
+                    </form>
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================
+         FOOTER
+    ================================= -->
+
+    <footer class="footer">
+
+        <div class="footer-bottom">
+
+            © 2026 Citizen Connect — Authority Portal
+
+        </div>
+
+    </footer>
+
+
+
+    <script src="js/config.js"></script>
+    <script src="js/details.js"></script>
+
+
+</body>
+
+</html>

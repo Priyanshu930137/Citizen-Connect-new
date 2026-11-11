@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Citizen Connect | Home</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         NAVBAR
+    ====================================== -->
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+
+            <div class="logo-icon">
+                🏛️
+            </div>
+
+            <span>Citizen Connect</span>
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a
+                href="index.html"
+                class="active"
+            >
+                Home
+            </a>
+
+            <a
+                href="citizen-dashboard.html"
+                id="dashboardNavLink"
+            >
+                My Dashboard
+            </a>
+
+            <a href="submit.html">
+                Submit Grievance
+            </a>
+
+            <a href="track.html">
+                Track Status
+            </a>
+
+        </div>
+
+
+        <div class="nav-actions">
+
+            <span
+                id="userName"
+                style="
+                    font-weight: 600;
+                    color: var(--text-secondary);
+                "
+            >
+                Loading...
+            </span>
+
+
+            <button
+                id="logoutButton"
+                class="btn btn-outline"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================
+         HERO SECTION
+    ====================================== -->
+
+    <section
+        style="
+            padding: 75px 0;
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #f8fafc 55%,
+                    #e0f2fe
+                );
+        "
+    >
+
+        <div class="container">
+
+            <div
+                class="grid grid-2"
+                style="
+                    align-items: center;
+                    gap: 60px;
+                "
+            >
+
+
+                <!-- HERO CONTENT -->
+
+                <div>
+
+                    <div
+                        class="badge badge-progress"
+                        style="
+                            margin-bottom: 18px;
+                        "
+                    >
+                        ✨ Smart Citizen Engagement Platform
+                    </div>
+
+
+                    <h1
+                        style="
+                            font-family: 'Poppins', sans-serif;
+                            font-size: clamp(2.5rem, 5vw, 4.5rem);
+                            line-height: 1.1;
+                            margin-bottom: 22px;
+                        "
+                    >
+
+                        Your Voice Can
+                        <span
+                            style="
+                                color: var(--primary);
+                            "
+                        >
+                            Make a Difference.
+                        </span>
+
+                    </h1>
+
+
+                    <p
+                        style="
+                            color: var(--text-secondary);
+                            font-size: 1.1rem;
+                            max-width: 600px;
+                            margin-bottom: 30px;
+                        "
+                    >
+
+                        Report public issues, track their progress,
+                        and stay connected with the authorities
+                        responsible for improving your community.
+
+                    </p>
+
+
+                    <div
+                        style="
+                            display: flex;
+                            gap: 14px;
+                            flex-wrap: wrap;
+                        "
+                    >
+
+                        <a
+                            href="submit.html"
+                            class="btn btn-primary"
+                            style="
+                                padding: 14px 24px;
+                            "
+                        >
+                            📝 Submit Grievance
+                        </a>
+
+
+                        <a
+                            href="track.html"
+                            class="btn btn-outline"
+                            style="
+                                padding: 14px 24px;
+                            "
+                        >
+                            🔍 Track Grievance
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- HERO CARD -->
+
+                <div
+                    class="card"
+                    style="
+                        padding: 32px;
+                        position: relative;
+                    "
+                >
+
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-bottom: 25px;
+                        "
+                    >
+
+                        <div>
+
+                            <p
+                                style="
+                                    color: var(--text-secondary);
+                                    font-size: 0.9rem;
+                                "
+                            >
+                                Citizen Connect
+
+                            </p>
+
+                            <h2
+                                style="
+                                    font-family: 'Poppins', sans-serif;
+                                "
+                            >
+                                Quick Overview
+
+                            </h2>
+
+                        </div>
+
+
+                        <div
+                            class="logo-icon"
+                        >
+                            📊
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="grid grid-2"
+                    >
+
+
+                        <div
+                            style="
+                                padding: 18px;
+                                background: #eff6ff;
+                                border-radius: 14px;
+                            "
+                        >
+
+                            <div
+                                style="
+                                    font-size: 1.7rem;
+                                "
+                            >
+                                📝
+                            </div>
+
+                            <h3
+                                style="
+                                    margin-top: 8px;
+                                "
+                            >
+                                Easy Reporting
+                            </h3>
+
+                            <p
+                                style="
+                                    color: var(--text-secondary);
+                                    font-size: 0.88rem;
+                                "
+                            >
+                                Submit issues in minutes.
+
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                padding: 18px;
+                                background: #f0fdf4;
+                                border-radius: 14px;
+                            "
+                        >
+
+                            <div
+                                style="
+                                    font-size: 1.7rem;
+                                "
+                            >
+                                🤖
+                            </div>
+
+                            <h3
+                                style="
+                                    margin-top: 8px;
+                                "
+                            >
+                                AI Assessment
+                            </h3>
+
+                            <p
+                                style="
+                                    color: var(--text-secondary);
+                                    font-size: 0.88rem;
+                                "
+                            >
+                                Smart categorization.
+
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                padding: 18px;
+                                background: #fff7ed;
+                                border-radius: 14px;
+                            "
+                        >
+
+                            <div
+                                style="
+                                    font-size: 1.7rem;
+                                "
+                            >
+                                🔍
+                            </div>
+
+                            <h3
+                                style="
+                                    margin-top: 8px;
+                                "
+                            >
+                                Track Progress
+                            </h3>
+
+                            <p
+                                style="
+                                    color: var(--text-secondary);
+                                    font-size: 0.88rem;
+                                "
+                            >
+                                Stay updated.
+
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                padding: 18px;
+                                background: #faf5ff;
+                                border-radius: 14px;
+                            "
+                        >
+
+                            <div
+                                style="
+                                    font-size: 1.7rem;
+                                "
+                            >
+                                🏛️
+                            </div>
+
+                            <h3
+                                style="
+                                    margin-top: 8px;
+                                "
+                            >
+                                Authorities
+                            </h3>
+
+                            <p
+                                style="
+                                    color: var(--text-secondary);
+                                    font-size: 0.88rem;
+                                "
+                            >
+                                Connected directly.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         QUICK ACTIONS
+    ====================================== -->
+
+    <section
+        style="
+            padding: 80px 0;
+        "
+    >
+
+        <div class="container">
+
+
+            <div
+                style="
+                    text-align: center;
+                    max-width: 650px;
+                    margin: 0 auto 45px;
+                "
+            >
+
+                <span
+                    class="badge badge-progress"
+                >
+                    QUICK ACTIONS
+                </span>
+
+
+                <h2
+                    style="
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 2.2rem;
+                        margin: 15px 0;
+                    "
+                >
+                    What would you like to do?
+                </h2>
+
+
+                <p
+                    style="
+                        color: var(--text-secondary);
+                    "
+                >
+                    Access the main features of Citizen Connect.
+
+                </p>
+
+            </div>
+
+
+
+            <div class="grid grid-3">
+
+
+                <!-- SUBMIT -->
+
+                <a
+                    href="submit.html"
+                    class="card"
+                    style="
+                        text-decoration: none;
+                        color: inherit;
+                        text-align: center;
+                        padding: 35px 25px;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size: 2.7rem;
+                            margin-bottom: 16px;
+                        "
+                    >
+                        📝
+                    </div>
+
+
+                    <h3
+                        style="
+                            font-family: 'Poppins', sans-serif;
+                            margin-bottom: 10px;
+                        "
+                    >
+                        Submit Grievance
+                    </h3>
+
+
+                    <p
+                        style="
+                            color: var(--text-secondary);
+                        "
+                    >
+                        Report a public issue or problem
+                        in your area.
+
+                    </p>
+
+                </a>
+
+
+
+                <!-- TRACK -->
+
+                <a
+                    href="track.html"
+                    class="card"
+                    style="
+                        text-decoration: none;
+                        color: inherit;
+                        text-align: center;
+                        padding: 35px 25px;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size: 2.7rem;
+                            margin-bottom: 16px;
+                        "
+                    >
+                        🔍
+                    </div>
+
+
+                    <h3
+                        style="
+                            font-family: 'Poppins', sans-serif;
+                            margin-bottom: 10px;
+                        "
+                    >
+                        Track Status
+                    </h3>
+
+
+                    <p
+                        style="
+                            color: var(--text-secondary);
+                        "
+                    >
+                        Check the progress of your
+                        submitted grievances.
+
+                    </p>
+
+                </a>
+
+
+
+                <!-- HOW IT WORKS -->
+
+                <a
+                    href="#how-it-works"
+                    class="card"
+                    style="
+                        text-decoration: none;
+                        color: inherit;
+                        text-align: center;
+                        padding: 35px 25px;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size: 2.7rem;
+                            margin-bottom: 16px;
+                        "
+                    >
+                        💡
+                    </div>
+
+
+                    <h3
+                        style="
+                            font-family: 'Poppins', sans-serif;
+                            margin-bottom: 10px;
+                        "
+                    >
+                        How It Works
+                    </h3>
+
+
+                    <p
+                        style="
+                            color: var(--text-secondary);
+                        "
+                    >
+                        Learn how Citizen Connect
+                        handles your grievance.
+
+                    </p>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         HOW IT WORKS
+    ====================================== -->
+
+    <section
+        id="how-it-works"
+        style="
+            padding: 80px 0;
+            background: white;
+            border-top: 1px solid var(--border);
+        "
+    >
+
+        <div class="container">
+
+
+            <div
+                style="
+                    text-align: center;
+                    margin-bottom: 55px;
+                "
+            >
+
+                <span class="badge badge-progress">
+                    SIMPLE PROCESS
+                </span>
+
+
+                <h2
+                    style="
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 2.2rem;
+                        margin-top: 15px;
+                    "
+                >
+                    From Problem to Resolution
+                </h2>
+
+            </div>
+
+
+
+            <div class="grid grid-4">
+
+
+                <div
+                    style="
+                        text-align: center;
+                        padding: 20px;
+                    "
+                >
+
+                    <div
+                        style="
+                            width: 60px;
+                            height: 60px;
+                            margin: 0 auto 18px;
+                            border-radius: 50%;
+                            background: var(--primary-light);
+                            display: grid;
+                            place-items: center;
+                            font-size: 1.4rem;
+                            font-weight: bold;
+                            color: var(--primary);
+                        "
+                    >
+                        1
+                    </div>
+
+                    <h3>
+                        Submit
+                    </h3>
+
+                    <p
+                        style="
+                            color: var(--text-secondary);
+                            font-size: 0.9rem;
+                            margin-top: 8px;
+                        "
+                    >
+                        Describe the issue.
+
+                    </p>
+
+                </div>
+
+
+                <div
+                    style="
+                        text-align: center;
+                        padding: 20px;
+                    "
+                >
+
+                    <div
+                        style="
+                            width: 60px;
+                            height: 60px;
+                            margin: 0 auto 18px;
+                            border-radius: 50%;
+                            background: var(--primary-light);
+                            display: grid;
+                            place-items: center;
+                            font-size: 1.4rem;
+                            font-weight: bold;
+                            color: var(--primary);
+                        "
+                    >
+                        2
+                    </div>
+
+                    <h3>
+                        AI Analysis
+                    </h3>
+
+                    <p
+                        style="
+                            color: var(--text-secondary);
+                            font-size: 0.9rem;
+                            margin-top: 8px;
+                        "
+                    >
+                        Smart categorization.
+
+                    </p>
+
+                </div>
+
+
+                <div
+                    style="
+                        text-align: center;
+                        padding: 20px;
+                    "
+                >
+
+                    <div
+                        style="
+                            width: 60px;
+                            height: 60px;
+                            margin: 0 auto 18px;
+                            border-radius: 50%;
+                            background: var(--primary-light);
+                            display: grid;
+                            place-items: center;
+                            font-size: 1.4rem;
+                            font-weight: bold;
+                            color: var(--primary);
+                        "
+                    >
+                        3
+                    </div>
+
+                    <h3>
+                        Authority Review
+                    </h3>
+
+                    <p
+                        style="
+                            color: var(--text-secondary);
+                            font-size: 0.9rem;
+                            margin-top: 8px;
+                        "
+                    >
+                        Sent to the department.
+
+                    </p>
+
+                </div>
+
+
+                <div
+                    style="
+                        text-align: center;
+                        padding: 20px;
+                    "
+                >
+
+                    <div
+                        style="
+                            width: 60px;
+                            height: 60px;
+                            margin: 0 auto 18px;
+                            border-radius: 50%;
+                            background: var(--primary-light);
+                            display: grid;
+                            place-items: center;
+                            font-size: 1.4rem;
+                            font-weight: bold;
+                            color: var(--primary);
+                        "
+                    >
+                        4
+                    </div>
+
+                    <h3>
+                        Resolution
+                    </h3>
+
+                    <p
+                        style="
+                            color: var(--text-secondary);
+                            font-size: 0.9rem;
+                            margin-top: 8px;
+                        "
+                    >
+                        Track updates and progress.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         CTA SECTION
+    ====================================== -->
+
+    <section
+        style="
+            padding: 80px 0;
+        "
+    >
+
+        <div class="container">
+
+            <div
+                style="
+                    background:
+                        linear-gradient(
+                            135deg,
+                            var(--secondary),
+                            #1e3a8a
+                        );
+
+                    color: white;
+
+                    padding: 55px;
+
+                    border-radius: var(--radius-lg);
+
+                    text-align: center;
+                "
+            >
+
+                <h2
+                    style="
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 2.4rem;
+                        margin-bottom: 15px;
+                    "
+                >
+                    Have an Issue to Report?
+                </h2>
+
+
+                <p
+                    style="
+                        color: #cbd5e1;
+                        margin-bottom: 25px;
+                    "
+                >
+                    Your feedback helps create a better community.
+
+                </p>
+
+
+                <a
+                    href="submit.html"
+                    class="btn"
+                    style="
+                        background: white;
+                        color: var(--secondary);
+                        padding: 14px 25px;
+                    "
+                >
+                    Submit a Grievance →
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <div>
+
+                <h3>
+                    🏛️ Citizen Connect
+                </h3>
+
+                <p>
+                    Connecting citizens and authorities
+                    for better, faster and more transparent
+                    public grievance resolution.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Quick Links
+                </h3>
+
+                <p>
+                    Home · Submit · Track
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 Citizen Connect.
+            All rights reserved.
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
+    <script src="js/home.js"></script>
+
+
+</body>
+
+</html>

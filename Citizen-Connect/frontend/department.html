@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Department Management | Citizen Connect</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     NAVBAR
+========================================== -->
+
+<nav class="navbar">
+
+    <a
+        href="department.html"
+        class="logo"
+    >
+
+        <div class="logo-icon">
+            🏢
+        </div>
+
+        <span>
+            Citizen Connect
+        </span>
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a
+            href="department.html"
+            class="active"
+        >
+            Department Dashboard
+        </a>
+
+    </div>
+
+
+    <div class="nav-actions">
+
+        <div
+            style="
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                margin-right: 10px;
+            "
+        >
+
+            <span
+                id="userName"
+                style="font-weight: 600;"
+            >
+                Loading...
+            </span>
+
+
+            <small
+                id="userDepartment"
+                style="
+                    color: var(--text-secondary);
+                    margin-top: 3px;
+                "
+            >
+                Loading department...
+            </small>
+
+        </div>
+
+
+        <button
+            id="logoutButton"
+            class="btn btn-outline"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ==========================================
+     HERO SECTION
+========================================== -->
+
+<section
+    style="
+        padding: 55px 0;
+        background: linear-gradient(
+            135deg,
+            #eff6ff,
+            #f8fafc,
+            #e0f2fe
+        );
+    "
+>
+
+    <div class="container">
+
+
+        <span class="badge badge-progress">
+
+            🏢 DEPARTMENT MANAGEMENT
+
+        </span>
+
+
+        <h1
+            style="
+                font-family: 'Poppins', sans-serif;
+                margin-top: 18px;
+                font-size: clamp(2rem, 5vw, 3.3rem);
+            "
+        >
+
+            Department Grievance Center
+
+        </h1>
+
+
+        <p
+            style="
+                color: var(--text-secondary);
+                margin-top: 12px;
+                max-width: 750px;
+            "
+        >
+
+            Manage department grievances, monitor workload,
+            and assign issues to available technicians.
+
+        </p>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     MAIN CONTENT
+========================================== -->
+
+<section
+    style="
+        padding: 50px 0;
+        min-height: 70vh;
+    "
+>
+
+    <div class="container">
+
+
+        <!-- ======================================
+             MESSAGE
+        ======================================= -->
+
+        <div
+            id="departmentMessage"
+            style="
+                display: none;
+                padding: 15px;
+                border-radius: 10px;
+                margin-bottom: 25px;
+            "
+        >
+        </div>
+
+
+
+        <!-- ======================================
+             STATISTICS
+        ======================================= -->
+
+        <div
+            class="grid grid-4"
+            style="margin-bottom: 35px;"
+        >
+
+
+            <!-- TOTAL -->
+
+            <div class="card" style="padding: 25px;">
+
+                <p style="color: var(--text-secondary);">
+                    Total Department Cases
+                </p>
+
+                <h2
+                    id="totalCount"
+                    style="
+                        margin-top: 10px;
+                        font-size: 2rem;
+                    "
+                >
+                    0
+                </h2>
+
+            </div>
+
+
+
+            <!-- PENDING -->
+
+            <div class="card" style="padding: 25px;">
+
+                <p style="color: var(--text-secondary);">
+                    Pending Assignment
+                </p>
+
+                <h2
+                    id="pendingCount"
+                    style="
+                        margin-top: 10px;
+                        font-size: 2rem;
+                    "
+                >
+                    0
+                </h2>
+
+            </div>
+
+
+
+            <!-- IN PROGRESS -->
+
+            <div class="card" style="padding: 25px;">
+
+                <p style="color: var(--text-secondary);">
+                    In Progress
+                </p>
+
+                <h2
+                    id="progressCount"
+                    style="
+                        margin-top: 10px;
+                        font-size: 2rem;
+                    "
+                >
+                    0
+                </h2>
+
+            </div>
+
+
+
+            <!-- RESOLVED -->
+
+            <div class="card" style="padding: 25px;">
+
+                <p style="color: var(--text-secondary);">
+                    Resolved
+                </p>
+
+                <h2
+                    id="resolvedCount"
+                    style="
+                        margin-top: 10px;
+                        font-size: 2rem;
+                    "
+                >
+                    0
+                </h2>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ======================================
+             TECHNICIAN SECTION
+        ======================================= -->
+
+        <div
+            class="card"
+            style="
+                padding: 30px;
+                margin-bottom: 35px;
+            "
+        >
+
+
+            <div
+                style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 20px;
+                    flex-wrap: wrap;
+                    margin-bottom: 25px;
+                "
+            >
+
+                <div>
+
+                    <span class="badge badge-progress">
+
+                        👷 TECHNICIAN MANAGEMENT
+
+                    </span>
+
+
+                    <h2
+                        style="
+                            font-family: 'Poppins', sans-serif;
+                            margin-top: 12px;
+                        "
+                    >
+                        Available Technicians
+                    </h2>
+
+
+                    <p
+                        style="
+                            color: var(--text-secondary);
+                            margin-top: 6px;
+                        "
+                    >
+                        Technicians registered in your department.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="refreshTechniciansButton"
+                    class="btn btn-outline"
+                >
+                    🔄 Refresh
+                </button>
+
+            </div>
+
+
+
+            <div
+                id="techniciansContainer"
+                class="grid grid-3"
+            >
+
+                <p
+                    style="
+                        color: var(--text-secondary);
+                    "
+                >
+                    ⏳ Loading technicians...
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ======================================
+             GRIEVANCE MANAGEMENT
+        ======================================= -->
+
+        <div
+            class="card"
+            style="
+                padding: 30px;
+                margin-bottom: 30px;
+            "
+        >
+
+
+            <div
+                style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 20px;
+                    flex-wrap: wrap;
+                    margin-bottom: 25px;
+                "
+            >
+
+
+                <div>
+
+                    <span class="badge badge-progress">
+
+                        📋 GRIEVANCE MANAGEMENT
+
+                    </span>
+
+
+                    <h2
+                        style="
+                            font-family: 'Poppins', sans-serif;
+                            margin-top: 12px;
+                        "
+                    >
+                        Department Grievances
+                    </h2>
+
+
+                    <p
+                        style="
+                            color: var(--text-secondary);
+                            margin-top: 6px;
+                        "
+                    >
+                        Review and assign grievances to technicians.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="refreshButton"
+                    class="btn btn-outline"
+                >
+                    🔄 Refresh
+                </button>
+
+
+            </div>
+
+
+
+            <!-- SEARCH -->
+
+            <div
+                style="
+                    margin-bottom: 25px;
+                "
+            >
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="form-control"
+                    placeholder="🔍 Search by ID, subject or citizen..."
+                >
+
+            </div>
+
+
+
+            <!-- LOADING -->
+
+            <div
+                id="loadingGrievances"
+                style="
+                    text-align: center;
+                    padding: 35px;
+                    color: var(--text-secondary);
+                "
+            >
+
+                ⏳ Loading department grievances...
+
+            </div>
+
+
+
+            <!-- TABLE -->
+
+            <div
+                id="tableContainer"
+                style="
+                    display: none;
+                    overflow-x: auto;
+                "
+            >
+
+                <table
+                    style="
+                        width: 100%;
+                        border-collapse: collapse;
+                    "
+                >
+
+                    <thead>
+
+                        <tr
+                            style="
+                                background: #f8fafc;
+                                border-bottom: 1px solid #e2e8f0;
+                            "
+                        >
+
+                            <th style="padding: 16px; text-align: left;">
+                                ID
+                            </th>
+
+                            <th style="padding: 16px; text-align: left;">
+                                Subject
+                            </th>
+
+                            <th style="padding: 16px; text-align: left;">
+                                Citizen
+                            </th>
+
+                            <th style="padding: 16px; text-align: left;">
+                                Priority
+                            </th>
+
+                            <th style="padding: 16px; text-align: left;">
+                                Status
+                            </th>
+
+                            <th style="padding: 16px; text-align: left;">
+                                Technician
+                            </th>
+
+                            <th style="padding: 16px; text-align: left;">
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="grievanceTableBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ======================================
+             ASSIGNMENT MODAL
+        ======================================= -->
+
+        <div
+            id="assignmentModal"
+            style="
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(15, 23, 42, 0.55);
+                z-index: 9999;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            "
+        >
+
+
+            <div
+                class="card"
+                style="
+                    width: 100%;
+                    max-width: 500px;
+                    padding: 30px;
+                "
+            >
+
+
+                <div
+                    style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 25px;
+                    "
+                >
+
+                    <div>
+
+                        <h2
+                            style="
+                                font-family: 'Poppins', sans-serif;
+                            "
+                        >
+                            Assign Technician
+                        </h2>
+
+
+                        <p
+                            id="assignmentGrievanceInfo"
+                            style="
+                                color: var(--text-secondary);
+                                margin-top: 5px;
+                            "
+                        >
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        id="closeModalButton"
+                        style="
+                            border: none;
+                            background: transparent;
+                            font-size: 1.5rem;
+                            cursor: pointer;
+                        "
+                    >
+                        ✕
+                    </button>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="technicianSelect">
+                        Select Technician
+                    </label>
+
+
+                    <select
+                        id="technicianSelect"
+                        class="form-control"
+                    >
+
+                        <option value="">
+                            Select a technician
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div
+                    style="
+                        display: flex;
+                        gap: 12px;
+                        margin-top: 25px;
+                    "
+                >
+
+                    <button
+                        id="confirmAssignmentButton"
+                        class="btn btn-primary"
+                        style="flex: 1;"
+                    >
+                        Assign Technician
+                    </button>
+
+
+                    <button
+                        id="cancelAssignmentButton"
+                        class="btn btn-outline"
+                        style="flex: 1;"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
+<footer class="footer">
+
+    <div class="footer-bottom">
+
+        © 2026 Citizen Connect — Department Management Portal
+
+    </div>
+
+</footer>
+
+
+
+<!-- ==========================================
+     JAVASCRIPT
+========================================== -->
+
+<script src="js/config.js"></script>
+<script src="js/department.js"></script>
+
+
+</body>
+
+</html>

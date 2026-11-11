@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Submit Grievance | Citizen Connect</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+
+            <div class="logo-icon">🏛️</div>
+
+            <span>Citizen Connect</span>
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="index.html">Home</a>
+
+            <a href="submit.html" class="active">
+                Submit Grievance
+            </a>
+
+            <a href="track.html">
+                Track Status
+            </a>
+
+        </div>
+
+
+        <div class="nav-actions">
+
+            <span id="userName" style="
+                    font-weight: 600;
+                    color: var(--text-secondary);
+                ">
+                Loading...
+            </span>
+
+
+            <button id="logoutButton" class="btn btn-outline">
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- PAGE HEADER -->
+
+    <section style="
+            padding: 65px 0;
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #f8fafc,
+                    #e0f2fe
+                );
+        ">
+
+        <div class="container">
+
+            <div style="max-width: 750px;">
+
+                <span class="badge badge-progress">
+                    📝 CITIZEN GRIEVANCE PORTAL
+                </span>
+
+
+                <h1 style="
+                        font-family: 'Poppins', sans-serif;
+                        font-size: clamp(2.2rem, 5vw, 3.8rem);
+                        margin: 18px 0;
+                    ">
+                    Submit a Grievance
+                </h1>
+
+
+                <p style="
+                        color: var(--text-secondary);
+                        font-size: 1.08rem;
+                        max-width: 650px;
+                    ">
+                    Report a public issue and our intelligent system
+                    will assess and route it to the appropriate authority.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- MAIN CONTENT -->
+
+    <section style="padding: 70px 0;">
+
+        <div class="container">
+
+            <div class="grid grid-2" style="
+                    align-items: start;
+                    gap: 45px;
+                ">
+
+
+                <!-- GRIEVANCE FORM -->
+
+                <div class="card" style="padding: 35px;">
+
+
+                    <div style="margin-bottom: 30px;">
+
+                        <h2 style="
+                                font-family: 'Poppins', sans-serif;
+                                margin-bottom: 8px;
+                            ">
+                            Grievance Details
+                        </h2>
+
+
+                        <p style="color: var(--text-secondary);">
+
+                            Please provide accurate information
+                            so the appropriate authority can
+                            understand and resolve the issue.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- MESSAGE -->
+
+                    <div id="submitMessage" style="
+                            display: none;
+                            padding: 15px;
+                            margin-bottom: 20px;
+                            border-radius: 10px;
+                        "></div>
+
+
+
+                    <!-- FORM -->
+
+                    <form id="grievanceForm">
+
+
+                        <!-- SUBJECT -->
+
+                        <div class="form-group">
+
+                            <label for="subject">
+                                Grievance Title
+                            </label>
+
+
+                            <input type="text" id="subject" class="form-control"
+                                placeholder="Example: Large pothole on the main road" required>
+
+                        </div>
+
+
+
+                        <!-- PHONE -->
+
+                        <div class="form-group">
+
+                            <label for="phone">
+                                Phone Number
+                                <span style="color: var(--text-secondary);">
+                                    (Optional)
+                                </span>
+                            </label>
+
+
+                            <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number">
+
+                        </div>
+
+
+
+                        <!-- LOCATION -->
+
+                        <div class="form-group">
+
+                            <label for="location">
+                                Location
+                            </label>
+
+
+                            <input type="text" id="location" class="form-control"
+                                placeholder="Example: Thatipur, Gwalior" required>
+
+                        </div>
+
+
+
+                        <!-- DESCRIPTION -->
+
+                        <div class="form-group">
+
+                            <label for="description">
+                                Describe the Problem
+                            </label>
+
+
+                            <textarea id="description" class="form-control" rows="7"
+                                placeholder="Describe the issue clearly and provide as much useful information as possible..."
+                                required></textarea>
+                            <label for="image">Complaint Image</label>
+                            <input type="file" id="image" name="image" accept="image/*">
+
+                        </div>
+
+
+
+                        <!-- AI NOTICE -->
+
+                        <div style="
+                                background: #eff6ff;
+                                border: 1px solid #bfdbfe;
+                                padding: 16px;
+                                border-radius: 12px;
+                                margin-bottom: 22px;
+                            ">
+
+                            <strong>
+                                🤖 AI-Powered Assessment
+                            </strong>
+
+
+                            <p style="
+                                    color: var(--text-secondary);
+                                    font-size: 0.9rem;
+                                    margin-top: 6px;
+                                ">
+
+                                Our AI system will automatically analyze
+                                your grievance and determine its category,
+                                department, and priority.
+
+                            </p>
+
+                        </div>
+
+
+
+                        <!-- SUBMIT BUTTON -->
+
+                        <button type="submit" id="submitButton" class="btn btn-primary" style="
+                                width: 100%;
+                                padding: 15px;
+                                font-size: 1rem;
+                            ">
+
+                            📝 Submit Grievance
+
+                        </button>
+
+
+                    </form>
+
+                </div>
+
+
+
+                <!-- SIDEBAR -->
+
+                <div>
+
+
+                    <div class="card" style="
+                            padding: 30px;
+                            margin-bottom: 22px;
+                        ">
+
+                        <h3 style="
+                                font-family: 'Poppins', sans-serif;
+                                margin-bottom: 22px;
+                            ">
+                            🚀 What Happens Next?
+                        </h3>
+
+
+                        <div style="
+                                display: grid;
+                                gap: 22px;
+                            ">
+
+
+                            <div style="display: flex; gap: 14px;">
+
+                                <div style="
+                                        min-width: 38px;
+                                        height: 38px;
+                                        border-radius: 50%;
+                                        background: var(--primary-light);
+                                        display: grid;
+                                        place-items: center;
+                                        color: var(--primary);
+                                        font-weight: bold;
+                                    ">
+                                    1
+                                </div>
+
+
+                                <div>
+
+                                    <h4>Grievance Recorded</h4>
+
+                                    <p style="
+                                            color: var(--text-secondary);
+                                            font-size: 0.9rem;
+                                            margin-top: 4px;
+                                        ">
+                                        Your grievance is securely recorded.
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div style="display: flex; gap: 14px;">
+
+                                <div style="
+                                        min-width: 38px;
+                                        height: 38px;
+                                        border-radius: 50%;
+                                        background: var(--primary-light);
+                                        display: grid;
+                                        place-items: center;
+                                        color: var(--primary);
+                                        font-weight: bold;
+                                    ">
+                                    2
+                                </div>
+
+
+                                <div>
+
+                                    <h4>AI Assessment</h4>
+
+                                    <p style="
+                                            color: var(--text-secondary);
+                                            font-size: 0.9rem;
+                                            margin-top: 4px;
+                                        ">
+                                        AI determines category, department,
+                                        and priority.
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div style="display: flex; gap: 14px;">
+
+                                <div style="
+                                        min-width: 38px;
+                                        height: 38px;
+                                        border-radius: 50%;
+                                        background: var(--primary-light);
+                                        display: grid;
+                                        place-items: center;
+                                        color: var(--primary);
+                                        font-weight: bold;
+                                    ">
+                                    3
+                                </div>
+
+
+                                <div>
+
+                                    <h4>Authority Review</h4>
+
+                                    <p style="
+                                            color: var(--text-secondary);
+                                            font-size: 0.9rem;
+                                            margin-top: 4px;
+                                        ">
+                                        The appropriate department reviews it.
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div style="display: flex; gap: 14px;">
+
+                                <div style="
+                                        min-width: 38px;
+                                        height: 38px;
+                                        border-radius: 50%;
+                                        background: var(--primary-light);
+                                        display: grid;
+                                        place-items: center;
+                                        color: var(--primary);
+                                        font-weight: bold;
+                                    ">
+                                    4
+                                </div>
+
+
+                                <div>
+
+                                    <h4>Track Progress</h4>
+
+                                    <p style="
+                                            color: var(--text-secondary);
+                                            font-size: 0.9rem;
+                                            margin-top: 4px;
+                                        ">
+                                        Follow the progress until resolution.
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- TIPS -->
+
+                    <div class="card" style="
+                            padding: 30px;
+                            background: #fffbeb;
+                            border: 1px solid #fde68a;
+                        ">
+
+                        <h3 style="margin-bottom: 15px;">
+                            💡 Helpful Tips
+                        </h3>
+
+
+                        <ul style="
+                                color: var(--text-secondary);
+                                padding-left: 20px;
+                                display: grid;
+                                gap: 10px;
+                            ">
+
+                            <li>Provide a clear grievance title.</li>
+
+                            <li>Mention the exact location.</li>
+
+                            <li>Describe the issue in detail.</li>
+
+                            <li>Avoid duplicate submissions.</li>
+
+                        </ul>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <div>
+
+                <h3>🏛️ Citizen Connect</h3>
+
+                <p>
+                    Connecting citizens and authorities
+                    for better public services.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <h3>Quick Links</h3>
+
+                <p>
+                    Home · Submit · Track
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 Citizen Connect.
+            All rights reserved.
+
+        </div>
+
+    </footer>
+
+
+    <script src="js/config.js"></script>
+    <script src="js/submit.js"></script>
+
+
+</body>
+
+</html>

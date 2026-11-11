@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Track Grievance | Citizen Connect</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ================================
+         NAVBAR
+    ================================= -->
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+
+            <div class="logo-icon">🏛️</div>
+
+            <span>Citizen Connect</span>
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="submit.html">
+                Submit Grievance
+            </a>
+
+            <a href="track.html" class="active">
+                Track Status
+            </a>
+
+        </div>
+
+
+        <div class="nav-actions">
+
+            <span
+                id="userName"
+                style="
+                    font-weight: 600;
+                    color: var(--text-secondary);
+                "
+            >
+                Loading...
+            </span>
+
+
+            <button
+                id="logoutButton"
+                class="btn btn-outline"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================================
+         PAGE HEADER
+    ================================= -->
+
+    <section
+        style="
+            padding: 65px 0;
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #f8fafc,
+                    #e0f2fe
+                );
+        "
+    >
+
+        <div class="container">
+
+            <div
+                style="
+                    max-width: 750px;
+                    text-align: center;
+                    margin: auto;
+                "
+            >
+
+                <span class="badge badge-progress">
+                    🔍 GRIEVANCE TRACKING
+                </span>
+
+
+                <h1
+                    style="
+                        font-family: 'Poppins', sans-serif;
+                        font-size: clamp(2.2rem, 5vw, 3.8rem);
+                        margin: 18px 0;
+                    "
+                >
+                    Track Your Grievance
+                </h1>
+
+
+                <p
+                    style="
+                        color: var(--text-secondary);
+                        font-size: 1.08rem;
+                    "
+                >
+                    Enter your grievance ID to check its current
+                    status and view the latest information.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================
+         TRACKING SECTION
+    ================================= -->
+
+    <section
+        style="
+            padding: 70px 0;
+        "
+    >
+
+        <div class="container">
+
+
+            <!-- SEARCH CARD -->
+
+            <div
+                class="card"
+                style="
+                    max-width: 750px;
+                    margin: auto;
+                    padding: 35px;
+                "
+            >
+
+
+                <div
+                    style="
+                        text-align: center;
+                        margin-bottom: 28px;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size: 3rem;
+                            margin-bottom: 10px;
+                        "
+                    >
+                        🔎
+                    </div>
+
+
+                    <h2
+                        style="
+                            font-family: 'Poppins', sans-serif;
+                        "
+                    >
+                        Find Your Grievance
+                    </h2>
+
+
+                    <p
+                        style="
+                            color: var(--text-secondary);
+                            margin-top: 8px;
+                        "
+                    >
+                        Enter the grievance ID you received after submission.
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    id="trackMessage"
+                    style="
+                        display: none;
+                        padding: 15px;
+                        margin-bottom: 20px;
+                        border-radius: 10px;
+                    "
+                ></div>
+
+
+
+                <!-- TRACK FORM -->
+
+                <form id="trackForm">
+
+
+                    <div class="form-group">
+
+                        <label for="grievanceId">
+                            Grievance ID
+                        </label>
+
+
+                        <input
+                            type="number"
+                            id="grievanceId"
+                            class="form-control"
+                            placeholder="Example: 1"
+                            required
+                            min="1"
+                        >
+
+                    </div>
+
+
+
+                    <button
+                        type="submit"
+                        id="trackButton"
+                        class="btn btn-primary"
+                        style="
+                            width: 100%;
+                            padding: 15px;
+                            font-size: 1rem;
+                        "
+                    >
+
+                        🔍 Track Grievance
+
+                    </button>
+
+
+                </form>
+
+
+            </div>
+
+
+
+            <!-- ================================
+                 RESULT SECTION
+            ================================= -->
+
+            <div
+                id="resultSection"
+                style="
+                    display: none;
+                    max-width: 1000px;
+                    margin: 45px auto 0;
+                "
+            >
+
+
+                <!-- STATUS CARD -->
+
+                <div
+                    class="card"
+                    style="
+                        padding: 35px;
+                        margin-bottom: 25px;
+                    "
+                >
+
+
+                    <div
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: flex-start;
+                            gap: 20px;
+                            flex-wrap: wrap;
+                            margin-bottom: 30px;
+                        "
+                    >
+
+
+                        <div>
+
+                            <span
+                                style="
+                                    color: var(--text-secondary);
+                                    font-size: 0.9rem;
+                                "
+                            >
+                                GRIEVANCE ID
+                            </span>
+
+
+                            <h2
+                                id="resultId"
+                                style="
+                                    font-family: 'Poppins', sans-serif;
+                                    margin-top: 5px;
+                                "
+                            >
+                                #
+                            </h2>
+
+                        </div>
+
+
+
+                        <div
+                            id="statusBadge"
+                            class="badge badge-progress"
+                            style="
+                                font-size: 0.9rem;
+                                padding: 10px 16px;
+                            "
+                        >
+                            Pending
+                        </div>
+
+
+                    </div>
+
+
+
+                    <h2
+                        id="resultSubject"
+                        style="
+                            font-family: 'Poppins', sans-serif;
+                            margin-bottom: 12px;
+                        "
+                    >
+                        Grievance Subject
+                    </h2>
+
+
+                    <p
+                        id="resultDescription"
+                        style="
+                            color: var(--text-secondary);
+                            line-height: 1.7;
+                        "
+                    >
+                        Description will appear here.
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- DETAILS GRID -->
+
+                <div class="grid grid-2">
+
+
+                    <!-- LOCATION -->
+
+                    <div class="card" style="padding: 25px;">
+
+                        <span
+                            style="
+                                color: var(--text-secondary);
+                                font-size: 0.85rem;
+                            "
+                        >
+                            📍 LOCATION
+                        </span>
+
+
+                        <h3
+                            id="resultLocation"
+                            style="
+                                margin-top: 10px;
+                            "
+                        >
+                            -
+                        </h3>
+
+                    </div>
+
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="card" style="padding: 25px;">
+
+                        <span
+                            style="
+                                color: var(--text-secondary);
+                                font-size: 0.85rem;
+                            "
+                        >
+                            📂 CATEGORY
+                        </span>
+
+
+                        <h3
+                            id="resultCategory"
+                            style="
+                                margin-top: 10px;
+                            "
+                        >
+                            -
+                        </h3>
+
+                    </div>
+
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div class="card" style="padding: 25px;">
+
+                        <span
+                            style="
+                                color: var(--text-secondary);
+                                font-size: 0.85rem;
+                            "
+                        >
+                            🏢 DEPARTMENT
+                        </span>
+
+
+                        <h3
+                            id="resultDepartment"
+                            style="
+                                margin-top: 10px;
+                            "
+                        >
+                            -
+                        </h3>
+
+                    </div>
+
+
+
+                    <!-- PRIORITY -->
+
+                    <div class="card" style="padding: 25px;">
+
+                        <span
+                            style="
+                                color: var(--text-secondary);
+                                font-size: 0.85rem;
+                            "
+                        >
+                            ⚡ PRIORITY
+                        </span>
+
+
+                        <h3
+                            id="resultPriority"
+                            style="
+                                margin-top: 10px;
+                            "
+                        >
+                            -
+                        </h3>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- AI ASSESSMENT -->
+
+                <div
+                    class="card"
+                    style="
+                        padding: 30px;
+                        margin-top: 25px;
+                        background: #eff6ff;
+                        border: 1px solid #bfdbfe;
+                    "
+                >
+
+                    <h3
+                        style="
+                            margin-bottom: 15px;
+                        "
+                    >
+                        🤖 AI Assessment
+                    </h3>
+
+
+                    <p
+                        id="resultAiAssessment"
+                        style="
+                            color: var(--text-secondary);
+                            line-height: 1.7;
+                        "
+                    >
+                        AI assessment information will appear here.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- STATUS INFORMATION -->
+
+                <div
+                    class="card"
+                    style="
+                        padding: 30px;
+                        margin-top: 25px;
+                    "
+                >
+
+                    <h3
+                        style="
+                            margin-bottom: 20px;
+                        "
+                    >
+                        📋 Current Status
+                    </h3>
+
+
+                    <div
+                        id="statusInformation"
+                        style="
+                            color: var(--text-secondary);
+                            line-height: 1.7;
+                        "
+                    >
+
+                        Your grievance is currently being processed.
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================================
+                 HELP SECTION
+            ================================= -->
+
+            <div
+                style="
+                    max-width: 750px;
+                    margin: 55px auto 0;
+                    text-align: center;
+                "
+            >
+
+                <h2
+                    style="
+                        font-family: 'Poppins', sans-serif;
+                    "
+                >
+                    Don't Have Your Grievance ID?
+                </h2>
+
+
+                <p
+                    style="
+                        color: var(--text-secondary);
+                        margin: 12px 0 20px;
+                    "
+                >
+                    Your grievance ID is provided after a successful
+                    grievance submission.
+
+                </p>
+
+
+                <a
+                    href="submit.html"
+                    class="btn btn-outline"
+                >
+                    📝 Submit a New Grievance
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================
+         FOOTER
+    ================================= -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <div>
+
+                <h3>
+                    🏛️ Citizen Connect
+                </h3>
+
+                <p>
+                    Connecting citizens and authorities
+                    for better public services.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Quick Links
+                </h3>
+
+                <p>
+                    Home · Submit · Track
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 Citizen Connect.
+            All rights reserved.
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="js/config.js"></script>
+    <script src="js/track.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Citizen Dashboard | Citizen Connect</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         NAVBAR
+    ====================================== -->
+
+    <nav class="navbar">
+
+        <a
+            href="citizen.html"
+            class="nav-brand"
+        >
+
+            <span class="nav-logo">
+                🏛️
+            </span>
+
+            <span>
+                Citizen Connect
+            </span>
+
+        </a>
+
+
+        <div class="nav-right">
+
+            <span
+                id="welcomeUser"
+                class="welcome-user"
+            >
+                Welcome
+            </span>
+
+
+            <button
+                id="logoutButton"
+                class="btn btn-outline btn-small"
+            >
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================
+         MAIN CONTENT
+    ====================================== -->
+
+    <main class="dashboard-container">
+
+
+        <!-- HEADER -->
+
+        <section class="dashboard-header">
+
+            <div>
+
+                <span class="page-label">
+                    CITIZEN PORTAL
+                </span>
+
+                <h1>
+                    Welcome to Citizen Connect
+                </h1>
+
+                <p>
+                    Submit public grievances, track their
+                    progress, and stay updated about their
+                    resolution.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             ACTION CARDS
+        ====================================== -->
+
+        <section class="citizen-actions">
+
+
+            <!-- SUBMIT -->
+
+            <a
+                href="submit-grievance.html"
+                class="action-card"
+            >
+
+                <div class="action-icon">
+
+                    📝
+
+                </div>
+
+
+                <h3>
+                    Submit Grievance
+                </h3>
+
+
+                <p>
+                    Report a problem in your area and let
+                    the concerned authority know.
+                </p>
+
+
+                <span class="action-link">
+
+                    Submit Now →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- TRACK -->
+
+            <a
+                href="track-grievances.html"
+                class="action-card"
+            >
+
+                <div class="action-icon">
+
+                    🔍
+
+                </div>
+
+
+                <h3>
+                    Track Grievances
+                </h3>
+
+
+                <p>
+                    Check the current status and updates
+                    of your submitted grievances.
+                </p>
+
+
+                <span class="action-link">
+
+                    View Grievances →
+
+                </span>
+
+            </a>
+
+
+
+            <!-- INFORMATION -->
+
+            <div class="action-card">
+
+                <div class="action-icon">
+
+                    🤖
+
+                </div>
+
+
+                <h3>
+                    AI Smart Routing
+                </h3>
+
+
+                <p>
+                    Your grievance is automatically analysed
+                    and routed to the appropriate department.
+                </p>
+
+
+                <span class="action-link">
+
+                    Smart & Fast
+
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             RECENT GRIEVANCES
+        ====================================== -->
+
+        <section class="recent-section">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Recent Grievances
+                    </h2>
+
+                    <p>
+                        Your latest submitted grievances.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="track-grievances.html"
+                    class="btn btn-outline btn-small"
+                >
+
+                    View All
+
+                </a>
+
+            </div>
+
+
+
+            <div
+                id="recentGrievances"
+                class="grievance-list"
+            >
+
+                <div class="loading-box">
+
+                    Loading your grievances...
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer class="footer">
+
+        <p>
+            © 2026 Citizen Connect ·
+            Smart Citizen Engagement Platform
+        </p>
+
+    </footer>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+
+    <script src="js/citizen.js"></script>
+
+
+</body>
+
+</html>
