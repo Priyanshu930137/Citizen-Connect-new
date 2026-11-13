@@ -291,6 +291,29 @@
 
         </div>
 
+        <!-- Department charts use the same department-filtered records as the case table. -->
+        <div class="card" style="padding: 28px; margin-bottom: 35px;">
+            <span class="badge badge-progress">📊 DEPARTMENT PERFORMANCE</span>
+            <h2 style="font-family: 'Poppins', sans-serif; margin: 14px 0 6px;">Workload and service insights</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 22px;">Charts and alerts update from your department’s current grievance records.</p>
+
+            <div class="grid grid-3 department-chart-grid">
+                <div class="department-chart-card">
+                    <h3>Case status</h3>
+                    <canvas id="departmentStatusChart" role="img" aria-label="Grievances by status"></canvas>
+                </div>
+                <div class="department-chart-card">
+                    <h3>Open case priority</h3>
+                    <canvas id="departmentPriorityChart" role="img" aria-label="Open grievances by priority"></canvas>
+                </div>
+                <div class="department-chart-card">
+                    <h3>Technician workload</h3>
+                    <canvas id="departmentTechnicianChart" role="img" aria-label="Assigned cases by technician"></canvas>
+                </div>
+            </div>
+            <div id="departmentInsights" class="department-insights" aria-live="polite"></div>
+        </div>
+
 
 
         <!-- ======================================
@@ -713,6 +736,7 @@
      JAVASCRIPT
 ========================================== -->
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="js/config.js"></script>
 <script src="js/department.js"></script>
 

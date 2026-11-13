@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const API_BASE = window.CitizenConnect.apiBase();
 
     let allGrievances = [];
+    let visibleGrievances = [];
 
     let statusChart = null;
     let categoryChart = null;
@@ -263,7 +264,13 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById(
                 "highPriorityCount"
             ).textContent =
-                data.high_priority || 0;
+                data.open_high_priority ?? data.high_priority ?? 0;
+
+            document.getElementById("unassignedOpenCount").textContent =
+                data.unassigned_open ?? 0;
+
+            document.getElementById("overdueOpenCount").textContent =
+                data.overdue_open ?? 0;
 
 
         }
@@ -929,6 +936,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             populateCategoryFilter();
+            populateDepartmentFilter();
 
 
             applyFilters();
@@ -1043,6 +1051,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
+    function populateDepartmentFilter() {
+        const filter = document.getElementById("departmentFilter");
+        if (!filter) return;
+        const selected = filter.value;
+        const departments = [...new Set(allGrievances.map(item => item.department).filter(Boolean))].sort();
+        filter.replaceChildren(new Option("All Departments", ""));
+        departments.forEach(department => filter.add(new Option(department, department)));
+        filter.value = selected;
+    }
+
 
     // ==========================================
     // APPLY FILTERS
@@ -1075,6 +1093,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 "categoryFilter"
             ).value;
 
+        const department = document.getElementById("departmentFilter").value;
+
 
         const filtered =
             allGrievances.filter(
@@ -1089,7 +1109,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             grievance.citizen_name,
 
-                            grievance.category
+                            grievance.category,
+                            grievance.email,
+                            grievance.department,
+                            grievance.location,
+                            grievance.assigned_technician_name
 
                         ]
                             .join(" ")
@@ -1120,13 +1144,17 @@ document.addEventListener("DOMContentLoaded", function () {
                         grievance.category ===
                         category;
 
+                    const matchesDepartment =
+                        !department || grievance.department === department;
+
 
                     return (
 
                         matchesSearch &&
                         matchesStatus &&
                         matchesPriority &&
-                        matchesCategory
+                        matchesCategory &&
+                        matchesDepartment
 
                     );
 
@@ -1137,6 +1165,12 @@ document.addEventListener("DOMContentLoaded", function () {
         renderGrievances(
             filtered
         );
+
+        visibleGrievances = filtered;
+        const resultCount = document.getElementById("grievanceResultCount");
+        if (resultCount) {
+            resultCount.textContent = `Showing ${filtered.length} of ${allGrievances.length} grievances`;
+        }
 
     }
 
@@ -1443,6 +1477,8 @@ document.addEventListener("DOMContentLoaded", function () {
             "categoryFilter"
         );
 
+    const departmentFilter = document.getElementById("departmentFilter");
+
 
     if (searchInput) {
 
@@ -1483,6 +1519,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
+    if (departmentFilter) {
+        departmentFilter.addEventListener("change", applyFilters);
+    }
+
 
     // ==========================================
     // CLEAR FILTERS
@@ -1507,12 +1547,49 @@ document.addEventListener("DOMContentLoaded", function () {
                 priorityFilter.value = "";
 
                 categoryFilter.value = "";
+                departmentFilter.value = "";
 
                 applyFilters();
 
             }
         );
 
+    }
+
+
+    const exportCsvButton = document.getElementById("exportCsvButton");
+    if (exportCsvButton) {
+        exportCsvButton.addEventListener("click", function () {
+            if (!visibleGrievances.length) {
+                showMessage("There are no grievances in the current view to export.");
+                return;
+            }
+
+            const columns = [
+                ["ID", "id"], ["Subject", "subject"], ["Citizen", "citizen_name"],
+                ["Email", "email"], ["Department", "department"], ["Category", "category"],
+                ["Priority", "priority"], ["Status", "status"],
+                ["Assigned technician", "assigned_technician_name"], ["Location", "location"],
+                ["Created at", "created_at"]
+            ];
+            const escapeCell = value => {
+                let text = value == null ? "" : String(value);
+                if (/^[=+@-]/.test(text)) text = `'${text}`;
+                return `"${text.replace(/"/g, '""')}"`;
+            };
+            const csv = [columns.map(([label]) => escapeCell(label)).join(",")]
+                .concat(visibleGrievances.map(row => columns.map(([, key]) => escapeCell(row[key])).join(",")))
+                .join("\r\n");
+            const blob = new Blob(["\uFEFF", csv], { type: "text/csv;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `citizen-connect-grievances-${new Date().toISOString().slice(0, 10)}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        });
     }
 
 
